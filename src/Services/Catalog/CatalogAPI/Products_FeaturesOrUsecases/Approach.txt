@@ -1,0 +1,16 @@
+Vertical slice architecture where we have feature or usecase folders and then under it ideally everything can be in same class 
+including business logic, domain, UI and application layer but for better maintainbility and control Endpoint definition is separated from
+application specific logic in a handler class separately.
+Using MediatR library - usecase or feature handler classes will receive a query or a command. In create product case it will be a command.
+- MediatR gives IRequest<TResult> and IRequestHandler<Command,TResult>
+- Client Request converted to Query/Command types and then pass to MediatR and must implement IRequest<Result> -- MediatR then calls appropriate IRequestHandler that matches that command and result expected back.
+- Handlers always work with Commands and not direct user requests. They can be command handlers or query handlers.
+- We call mediatR.send and pass appropriate query/command and library itself decide respective handler based on command and result match.
+
+IMP - CQRS clearly states to separate queries from commands. But MediatR library provides single interface called IRequest<TResult> and Command and Query types implement same.
+This can be improved with bit of cusmoization where we can create one more level of abstraction ourself to separate command and queries and then they implement their own interfaces
+derived from base IRequest of mediatR. We can name them IQuery and ICommand both deriving from IRequest.
+Similarly ICommandhandler and IQueryHandler from IRequestHandler.
+
+
+
