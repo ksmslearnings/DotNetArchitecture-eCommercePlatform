@@ -1,19 +1,37 @@
-﻿using MediatR;
+﻿using BuildingBlocks.CQRSAbstractions;
+using CatalogAPI.Models;
 
 namespace CatalogAPI.Products_FeaturesOrUsecases.CreateProduct
 {
-    //business logic and layers of vertical slice are going to be here.
+    //KS - business logic and layers of vertical slice are going to be here.
 
-    public record CreateProductCommand(string Name, string description, List<string> categories, string ImageFile,decimal price): IRequest<CreateProductResult>;
+    //KS - Kind of Domain layer
+    public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile,decimal Price): ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
 
-
-    public class CreateProductCommandHandlerHandler : IRequestHandler<CreateProductCommand, CreateProductResult>
+    /// <summary>
+    /// KS - Kind of Application later
+    /// </summary>
+    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
-        public Task<CreateProductResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            //Business logic to create a product
-            throw new NotImplementedException();
+
+            //business logic goes here
+
+            var product = new Product
+            {
+                Name = command.Name,
+                Category = command.Category,
+                Description = command.Description,
+                ImageFile = command.ImageFile,
+                Price = command.Price,
+            };
+
+            //Infrastructure layer..
+            //save to database
+
+            return new CreateProductResult(Guid.NewGuid());
         }
     }
 }

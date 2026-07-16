@@ -13,4 +13,6 @@ derived from base IRequest of mediatR. We can name them IQuery and ICommand both
 Similarly ICommandhandler and IQueryHandler from IRequestHandler.
 
 
+Carter Library - it extends capabilities of .Net 8/10 minimal APIs. Better structured way to organize http endpoints and simplify creation of Http request handlers.
+This library provides extension methods over Asp.Net Core.
 
