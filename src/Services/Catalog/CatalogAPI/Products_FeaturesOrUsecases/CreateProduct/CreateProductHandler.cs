@@ -1,7 +1,4 @@
-﻿using BuildingBlocks.CQRSAbstractions;
-using CatalogAPI.Models;
-
-namespace CatalogAPI.Products_FeaturesOrUsecases.CreateProduct
+﻿namespace CatalogAPI.Products_FeaturesOrUsecases.CreateProduct
 {
     //KS - business logic and layers of vertical slice are going to be here.
 
@@ -11,8 +8,9 @@ namespace CatalogAPI.Products_FeaturesOrUsecases.CreateProduct
 
     /// <summary>
     /// KS - Kind of Application later
+    /// KS - Inject Marten Library's IDocumentSession
     /// </summary>
-    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+    public class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
@@ -29,9 +27,10 @@ namespace CatalogAPI.Products_FeaturesOrUsecases.CreateProduct
             };
 
             //Infrastructure layer..
-            //save to database
+            session.Store(product);
+            await session.SaveChangesAsync(cancellationToken);
 
-            return new CreateProductResult(Guid.NewGuid());
+            return new CreateProductResult(product.Id);
         }
     }
 }

@@ -12,6 +12,10 @@ builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);// KS - this will tell mediatR where and which assembly has Command and Query Handler classes are available.
 });
+builder.Services.AddMarten(opts =>
+{
+    opts.Connection(builder.Configuration.GetConnectionString("database")!);
+});
 
 var app = builder.Build();
 

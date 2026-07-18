@@ -16,3 +16,29 @@ Similarly ICommandhandler and IQueryHandler from IRequestHandler.
 Carter Library - it extends capabilities of .Net 8/10 minimal APIs. Better structured way to organize http endpoints and simplify creation of Http request handlers.
 This library provides extension methods over Asp.Net Core.
 
+Marten ORM library - it is an ORM library and leverage PostgresSql json object storage/capabilities - it transforms postgressql into .NET Transactional DocumentDb.
+So it combines flexibility of document database with reliable relational postgresSql database.
+It uses IDocumentStore as root and create IQuerySession and IDocumentSession for Read only and Read&Write scenarios respectively.
+Under IDocumentSession there are multiple implementations like LightweightDocumentSession for general scenarios like small transactions and read/write operations.
+This is transactional but doesnot track changes to loaded documents. 
+DirtyCheckingDocumentSession is when dirty checks are required for changing documents and it is done by comparing original loaded document 
+with changing state using Neutonsoft.json as an example by comparing node by node and finally there is
+IdentitymapDocumentSession etc.
+
+Docker Compose - multi-container orchestration tool - post generating docker compose file followed by running it should show it in docker desktop. Also running 
+docker ps command in terminal should show all running containers.
+
+Some commands in terminal to check postgres db
+docker ls -- return all running containers with Ids
+docker exec -it postgressqlContainerID bash -- start psql bash
+psdl -U postgres
+\l -- will show all the databases running 
+post Q 
+\c CatalogDb - to connect to database
+\d to see tables
+IMP - we dont need to add tables ourself . Martel will take care of it since we are using transactional DocumentDb approach. BAsed on commands in the code , they will be created.
+
+Actions needed -
+Test Product creation
+Implement Getproduct
+
